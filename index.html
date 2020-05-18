@@ -1,0 +1,857 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css">
+	<link rel="stylesheet" href="css/style.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section class="title">
+				<h1>Grid Layout</h1>
+			</section>
+			<section>
+				<h2>CSS Grid Layout (aka “Grid”)</h2>
+				<p>This CSS module defines a two-dimensional grid-based layout system,
+					optimized for user interface design. In the grid layout model, the children of a grid container can be
+					positioned into arbitrary slots in a predefined flexible or fixed-size layout grid.</p>
+			</section>
+
+			<section>
+				<h2>Browser support</h2>
+				<img src="src/img/browser-support.png" alt="">
+			</section>
+
+			<section class="terminology">
+				<section>
+					<h2>Terminology</h2>
+				</section>
+				<section>
+					<img class="term-img" src="src/img/terminology.jpg" alt="">
+				</section>
+				<section>
+					<p><span class="term-title">Grid container</span> - set of intersecting horizontal and vertical grid lines
+						that divide the container grid
+						space into grid areas into which grid elements can be placed.</p>
+					<p><span class="term-title">Grid lines</span> - The vertical and horizontal lines that divide the grid and
+						separate the columns and rows.
+					</p>
+					<p><span class="term-title">Grid cell</span> - A single unit of a CSS grid.</p>
+					<p><span class="term-title">Grid area</span> - Rectangular space surrounded by four grid lines. A grid area
+						can contain any number of grid
+						cells.</p>
+					<p><span class="term-title">Grid track</span> - The space between two grid lines. This space can be horizontal
+						or vertical.</p>
+					<p><span class="term-title">Grid row</span> - A horizontal track of a grid.</p>
+					<p><span class="term-title">Grid column</span> - A vertical track of a grid.</p>
+				</section>
+			</section>
+
+			<section>
+				<h2>Grid Container</h2>
+				<ul>
+					<li><span class="term-title">grid</span> - forms a grid as a block;</li>
+					<li><span class="term-title">inline-grid</span> - forms a grid as an inline block;</li>
+					<li><span class="term-title">subgrid</span> - if your container is also an element (nested grid), then you can
+						use this property to indicate
+						that the sizes of the rows / columns are taken from the parent element, and not define your own;</li>
+				</ul>
+				<pre><code>
+.container {
+  display: grid | inline-grid | subgrid;
+}
+			</code></pre>
+			</section>
+
+			<section>
+				<section>
+					<h2>Explicit Grid</h2>
+					<ul>
+						<li><span class="term-title">grid-template-columns</span></li>
+						<li><span class="term-title">grid-tempate-rows</span></li>
+						<li><span class="term-title">grid-template-areas</span></li>
+					</ul>
+				</section>
+				<section>
+					<h3>Values:</h3>
+					<ul>
+						<li>&lt;track-size&gt; - can be a fixed size, percent, or part of the free space in the grid (determined
+							using a unit fr(fraction));</li>
+						<li>&lt;line-name&gt; - an arbitrary name of your choice;</li>
+						<pre><code>
+.container {
+  grid-template-columns: &lt;track-size&gt; ... | &lt;line-name&gt; &lt;track-size&gt; ...;
+  grid-template-rows: &lt;track-size&gt; ... | &lt;line-name&gt; &lt;track-size&gt; ...;
+}
+						</code></pre>
+					</ul>
+				</section>
+				<section>
+					<h3>Examples</h3>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-rows: 50px 100px</code></pre>
+							<img class="property-img" src="src/img/rows.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-template-columns: 90px 50px 120px</code></pre>
+							<img class="property-img" src="src/img/grid-template-columns.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-columns: 1fr 1fr 2fr</code></pre>
+							<img class="property-img" src="src/img/grid-template-columns-fr.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-template-columns: 3rem 25% 1fr 2fr</code></pre>
+							<img class="property-img" src="src/img/grid-template-columns-percent.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+			<!-- <pre><code>
+.container {
+	grid-template-columns: [first] 40px [line2] 50px [line3] auto [col4-start] 50px [five] 40px [end];
+	grid-template-rows: [row1-start] 25% [row1-end] 100px [third-line] auto [last-line];
+}
+							</code></pre>
+					<pre><code>
+.container {
+	grid-template-columns: repeat(3, 20px [col-start]) 5%;
+}
+							</code></pre>
+					<pre><code>
+.container {
+	grid-template-columns: 1fr 1fr 1fr;
+}
+							</code></pre>
+
+				</section>
+				<section>
+					<h3>grid-template-areas</h3>
+					<h4>Values</h4>
+					<ul>
+						<li>&lt;grid-area-name&gt; - area name specified using grid-area ;</li>
+						<li>. - a dot denoting an empty cell;</li>
+						<li>none - areas are not defined;</li>
+					</ul>
+					<pre style="width: 80%;"><code>
+.container {
+	grid-template-areas:
+		"&lt;grid-area-name&gt; | . | none | ..."
+		"...";
+}
+					</code></pre>
+				</section>
+				<section style="display: flex;">
+					<h3>Examples</h3>
+					<div style="display: flex;">
+						<pre><code>
+.item-a {
+  grid-area: header;
+}
+.item-b {
+  grid-area: main;
+}
+.item-c {
+  grid-area: sidebar;
+}
+.item-d {
+  grid-area: footer;
+}
+
+.container {
+  grid-template-columns: 50px 50px 50px 50px;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "header header header header"
+    "main main . sidebar"
+    "footer footer footer footer";
+}
+				</code></pre>
+						<img src="src/img/grid-template-areas.png" alt="">
+					</div>
+				</section>
+				<section>
+					<h3>grid-template</h3>
+					<p>A shorthand for setting grid-template-rows, grid-template-columns, and grid-template-areas in a single declaration.</p>
+					<p style="text-align: left;">Values:</p>
+					<ul>
+						<li>none – sets all three properties to their initial values</li>
+						<li>&lt;grid-template-rows&gt; / &lt;grid-template-columns&gt; – sets grid-template-columns and grid-template-rows to the specified values, respectively, and sets grid-template-areas to none</li>
+					</ul>
+					<pre><code>
+.container{
+  grid-template: none | &lt;grid-template-rows&gt; / &lt;grid-template-columns&gt;;
+}</code></pre>
+				</section>
+				<section>
+					<h3>Examples</h3>
+					<pre><code>
+.container {
+	grid-template:
+		[row1-start] 25px "header header header" [row1-end]
+		[row2-start] "footer footer footer" 25px [row2-end]
+		/ auto 50px auto;
+}
+					</code></pre>
+				</section>
+			</section> -->
+			<section>
+				<section>
+					<h2>Minimum and Maximum Grid Track Sizes</h2>
+				</section>
+				<section>
+					<p>Tracks sizes can be defined to have a minimum and/or maximum size with the <span
+							class="term-title">minmax()</span> function.</p>
+					<pre><code>grid-template-rows: minmax(100px, auto);
+grid-template-columns: minmax(auto, 50%) 1fr 3em;
+				</code></pre>
+					<img src="src/img/min-max.png" alt="">
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Repeating Grid Tracks</h2>
+				</section>
+				<section>
+					<p>Define repeating grid tracks using the <span class="term-title">repeat()</span> notation. This is useful
+						for grids with items with equal
+						sizes or many items.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-rows: repeat(4, 100px);
+grid-template-columns: repeat(3, 1fr);</code></pre>
+							<img class="property-img" src="src/img/repeat1.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-template-columns: 30px repeat(3, 1fr) 30px
+ </code></pre>
+							<img class="property-img" src="src/img/repeat2.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Grid Gaps (Gutters)</h2>
+					<ul>
+						<li><span class="term-title">grid-column-gap</span></li>
+						<li><span class="term-title">grid-row-gap</span></li>
+					</ul>
+				</section>
+				<section>
+					<p>The <span class="term-title">grid-column-gap</span> and <span class="term-title">grid-row-gap</span>
+						properties create gutters between columns and rows. Grid gaps are only
+						created in between columns and rows, and not along the edge of the grid container.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row-gap: 20px;
+grid-column-gap: 5rem;</code></pre>
+							<img class="property-img" src="src/img/grid-gap1.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-gap: 100px 1em
+ </code></pre>
+							<img class="property-img" src="src/img/grid-gap2.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-gap: 2rem
+ </code></pre>
+							<img class="property-img" src="src/img/grid-gap3.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Positioning Items by Grid Line Numbers</h2>
+				</section>
+				<section>
+					<p>Grid lines are essentially lines that represent the start of, the end of, or between column and row tracks.
+						Each line, starting from the start of the track and in the direction of the grid, is numbered incrementally
+						starting from 1.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 2;
+grid-column-end: 3;</code></pre>
+							<img class="property-img" src="src/img/line1.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row:    2;
+grid-column: 3 / 4;
+
+ </code></pre>
+							<img class="property-img" src="src/img/line2.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-area: 2 / 2 / 3 / 3;
+
+
+ </code></pre>
+							<img class="property-img" src="src/img/line3.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Spanning Items Across Rows and Columns</h2>
+				</section>
+				<section>
+					<p>Grid items span only one column and row track by default, but can span multiple row and/or column tracks
+						using the same properties to position them.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-column-start: 1;
+grid-column-end: 4;</code></pre>
+							<img class="property-img" src="src/img/span1.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row-start: 1;
+grid-row-end: 4;</code></pre>
+							<img class="property-img" src="src/img/span2.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row: 2 / 5;
+grid-column: 2 / 4;</code></pre>
+							<img class="property-img" src="src/img/span3.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row: 2 / span 3;
+grid-column: span 2;
+</code></pre>
+							<img class="property-img" src="src/img/span4.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Naming Grid Lines</h2>
+				</section>
+				<section>
+					<p>Grid lines can be named when defining the grid with the <span class="term-title">grid-template-rows</span>
+						and <span class="term-title">grid-template-columns</span>
+						properties. Line names can then be referenced to position grid items.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-rows: [row-1-start] 1fr [row-2-start] 1fr [row-2-end];
+grid-template-columns: [col-1-start] 1fr [col-2-start] 1fr [col-3-start] 1fr [col-3-end];</code></pre>
+							<img class="property-img" src="src/img/line-name1.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-rows: [row-start row-1-start] 1fr [row-1-end row-2-start] 1fr [row-2-end row-end];
+grid-template-columns: [col-start] 1fr [col-2-start] 1fr [col-3-start] 1fr [col-end];</code></pre>
+							<img class="property-img" src="src/img/line-name2.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Positioning Items by Line Names</h2>
+				</section>
+				<section>
+					<p>With named grid lines, items can be positioned by line names and numbers.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row-start: row-2-start;
+grid-row-end: row-end;
+grid-column-start: col-2-start;
+grid-column-end: col-end;</code></pre>
+							<img class="property-img" src="src/img/pos-line-name1.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row: row-2-start / row-end;
+grid-column: col-2-start / col-end;
+
+
+</code></pre>
+							<img class="property-img" src="src/img/pos-line-name2.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Naming and Positioning Items by Grid Lines with the Same Name</h2>
+				</section>
+				<section>
+					<p>With named grid lines, items can be positioned by line names and numbers.</p>
+					<div>
+						<div>
+							<pre><code>grid-template-rows: repeat(3, [row-start] 1fr [row-end]);
+grid-template-columns: repeat(3, [col-start] 1fr [col-end]);</code></pre>
+							<img class="property-img" src="src/img/pos-line1.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div>
+						<div>
+							<pre><code>grid-row: row-start 2 / row-end 3;
+grid-column: col-start / col-start 3;
+</code></pre>
+							<img class="property-img" src="src/img/pos-line2.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Naming and Positioning Items by Grid Areas</h2>
+				</section>
+				<section>
+					<p>Like grid line names, grid areas can also be named with the <span
+							class="term-title">grid-template-areas</span> property. Names can then be
+						referenced to position grid items.</p>
+					<div>
+						<div>
+							<pre><code>grid-template-areas: "header header"
+                     "content sidebar"
+                     "footer footer";
+grid-template-rows: 150px 1fr 100px;
+grid-template-columns: 1fr 200px;</code></pre>
+							<img class="property-img" src="src/img/areas1.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row-start: header;
+grid-row-end: header;
+grid-column-start: header;
+grid-column-end: header;</code></pre>
+							<img class="property-img" src="src/img/areas2.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-row: footer;
+grid-column: footer;
+
+
+</code></pre>
+							<img class="property-img" src="src/img/areas3.png" alt="">
+						</div>
+						<div style="padding-right: 10px;">
+							<pre><code>grid-area: sidebar;
+
+
+
+</code></pre>
+							<img class="property-img" src="src/img/areas4.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Implicit Grid</h2>
+					<ul>
+						<li><span class="term-title">grid-auto-rows</span></li>
+						<li><span class="term-title">grid-auto-columns</span></li>
+						<li><span class="term-title">grid-auto-flow</span></li>
+					</ul>
+				</section>
+				<section>
+					<p>An implicit grid is created when a grid needs to position items outside of the explicit grid because there
+						isn’t enough space for items in the explicitly defined tracks or you decide to position something outside of
+						the explicit grid. Those items are then auto-placed in the implicit grid. The implicit grid can be defined
+						using the grid-auto-rows, grid-auto-columns, and grid-auto-flow properties.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-rows: 70px;
+grid-template-columns: repeat(2, 1fr);
+grid-auto-rows: 140px;</code></pre>
+							<img class="property-img" src="src/img/auto1.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-auto-flow: row
+
+
+</code></pre>
+							<img class="property-img" src="src/img/auto2.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-auto-flow: column
+
+
+</code></pre>
+							<img class="property-img" src="src/img/auto3.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-template-columns: 30px 60px;
+grid-auto-flow: column;
+grid-auto-columns: 1fr;</code></pre>
+							<img class="property-img" src="src/img/auto4.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Implicitly Named Grid Areas</h2>
+				</section>
+				<section>
+					<p>Grid lines can generally be named whatever you’d like, but assigning names ending in -start and -end comes
+						with added benefits—they implicitly create named grid areas, which can be referenced for positioning.</p>
+					<div style="padding-right: 10px;">
+						<pre><code>grid-template-rows: [outer-start] 1fr [inner-start] 1fr [inner-end] 1fr [outer-end];
+grid-template-columns: [outer-start] 1fr [inner-start] 1fr [inner-end] 1fr [outer-end];
+grid-area: inner</code></pre>
+						<img class="property-img" src="src/img/implicitly-name-area.png" alt="">
+					</div>
+
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Implicitly Named Grid Lines</h2>
+				</section>
+				<section>
+					<p>Implicitly named grid lines work in reverse to implicitly named grid areas—naming grid areas implicitly
+						assigns names to grid lines.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>grid-template-areas: "header header"
+	             "content sidebar"
+	             "footer footer";
+grid-template-rows: 80px 1fr 40px;
+grid-template-columns: 1fr 200px;</code></pre>
+							<img class="property-img" src="src/img/implicitly-line-name2.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-row-start: header-start;
+grid-row-end: content-start;
+grid-column-start: footer-start;
+grid-column-end: sidebar-end;
+
+</code></pre>
+							<img class="property-img" src="src/img/implicitly-line-name1.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Layering Grid Items</h2>
+				</section>
+				<section>
+					<p>Grid items can be layered/stacked by properly positioning them and assigning z-index when necessary.</p>
+					<div style="display: flex;">
+						<div style="padding-right: 10px;">
+							<pre><code>.item-1,
+.item-2 {
+	grid-row-start:  1;
+	grid-column-end: span 2;
+}
+
+.item-1 { grid-column-start: 1; z-index: 1; }
+.item-2 { grid-column-start: 2 }</code></pre>
+							<img class="property-img" src="src/img/layering1.png" alt="">
+						</div>
+						<div>
+							<pre><code>grid-row-start: header-start;
+grid-row-end: content-end;
+grid-column-start: content-start;
+grid-column-end: sidebar-start;
+z-index: 1;
+
+
+
+</code></pre>
+							<img class="property-img" src="src/img/layering2.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Aligning Grid Items (Box Alignment)</h2>
+				</section>
+				<section>
+					<p>CSS’s Box Alignment Module complements CSS Grid to allow items to be aligned along the row of column axis.
+
+						<span class="term-title">justify-items</span> and <span class="term-title">justify-self</span> align items
+						along the row axis, and <span class="term-title">align-items</span> and <span
+							class="term-title">align-self</span> align items
+						along the column axis.
+
+						justify-items and align-items are applied to the grid container and support the following values:</p>
+					<ul style="display: flex; flex-direction: column; justify-content: start;">
+						<li><span class="term-title">auto</span></li>
+						<li><span class="term-title">normal</span></li>
+						<li><span class="term-title">start</span></li>
+						<li><span class="term-title">end</span></li>
+						<li><span class="term-title">center</span></li>
+						<li><span class="term-title">stretch</span></li>
+						<li><span class="term-title">baseline</span></li>
+						<li><span class="term-title">first baseline</span></li>
+						<li><span class="term-title">last baseline</span></li>
+					</ul>
+				</section>
+				<section>
+					<pre><code>.grid {
+	grid-template-rows: 80px 80px;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: "content content"
+	                     "content content";
+}
+.item { grid-area: content }</code></pre>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>justify-items: start</code></pre>
+							<img class="property-img-sm" src="src/img/justify-items1.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-items: center</code></pre>
+							<img class="property-img-sm" src="src/img/justify-items2.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-items: end</code></pre>
+							<img class="property-img-sm" src="src/img/justify-items3.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-items: stretch</code></pre>
+							<img class="property-img-sm" src="src/img/justify-items4.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>align-items: start</code></pre>
+							<img class="property-img-sm" src="src/img/align-items1.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-items: center</code></pre>
+							<img class="property-img-sm" src="src/img/align-items2.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-items: end</code></pre>
+							<img class="property-img-sm" src="src/img/align-items3.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-items: stretch</code></pre>
+							<img class="property-img-sm" src="src/img/align-items4.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Individual items (properties)</h2>
+				</section>
+				<section>
+					<p>Individual items can be <span class="term-title">self-aligned</span> with the <span
+							class="term-title">align-self</span> and <span class="term-title">justify-self</span> properties. These
+						properties
+						support the following value:</p>
+					<ul style="display: flex; flex-direction: column; justify-content: start;">
+						<li><span class="term-title">auto</span></li>
+						<li><span class="term-title">normal</span></li>
+						<li><span class="term-title">start</span></li>
+						<li><span class="term-title">end</span></li>
+						<li><span class="term-title">center</span></li>
+						<li><span class="term-title">stretch</span></li>
+						<li><span class="term-title">baseline</span></li>
+						<li><span class="term-title">first baseline</span></li>
+						<li><span class="term-title">last baseline</span></li>
+					</ul>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>.item-1 { justify-self: start }
+.item-2 { justify-self: center }
+.item-3 { justify-self: end }</code></pre>
+							<img class="property-img-sm" src="src/img/justify-self.png" alt="">
+						</div>
+						<div>
+							<pre><code>.item-1 { align-self: start }
+.item-2 { align-self: center }
+.item-3 { align-self: end }</code></pre>
+							<img class="property-img-sm" src="src/img/align-self.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<section>
+					<h2>Aligning Grid Tracks</h2>
+				</section>
+				<section>
+					<p>Grid tracks can be aligned relative to the grid container along the row and column axes.
+						<span class="term-title">align-content</span> aligns tracks along the row axis and <span
+							class="term-title">justify-content</span> along the column axis. They support the
+						following properties:</p>
+					<ul style="display: flex; flex-direction: column; justify-content: start;">
+						<li><span class="term-title">normal</span></li>
+						<li><span class="term-title">start</span></li>
+						<li><span class="term-title">end</span></li>
+						<li><span class="term-title">center</span></li>
+						<li><span class="term-title">stretch</span></li>
+						<li><span class="term-title">space-around</span></li>
+						<li><span class="term-title">space-between</span></li>
+						<li><span class="term-title">space-evenly</span></li>
+						<li><span class="term-title">baseline</span></li>
+						<li><span class="term-title">first baseline</span></li>
+						<li><span class="term-title">last baseline</span></li>
+					</ul>
+				</section>
+				<section>
+					<pre><code>.grid {
+	width: 100%;
+	height: 300px;
+	grid-template-columns: repeat(4, 45px);
+	grid-template-rows: repeat(4, 45px);
+	grid-gap: 0.5em;
+	justify-content: start;
+}</code></pre>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>justify-content: start</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content1.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-content: end;</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content2.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-content: center;</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content3.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-content: space-around;</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content4.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>justify-content: space-between;</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content5.png" alt="">
+						</div>
+						<div>
+							<pre><code>justify-content: space-evenly;</code></pre>
+							<img class="property-img-sm" src="src/img/justify-content6.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-content: start;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content1.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-content: end;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content2.png" alt="">
+						</div>
+					</div>
+				</section>
+				<section>
+					<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+						<div>
+							<pre><code>align-content: center;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content3.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-content: space-around;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content4.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-content: space-between;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content5.png" alt="">
+						</div>
+						<div>
+							<pre><code>align-content: space-evenly;</code></pre>
+							<img class="property-img-sm" src="src/img/align-content6.png" alt="">
+						</div>
+					</div>
+				</section>
+			</section>
+
+			<section>
+				<h1>Thank you!
+				</h1>
+			</section>
+
+
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			hash: true,
+			dependencies: [
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/highlight/highlight.js' },
+				{ src: 'plugin/notes/notes.js', async: true }
+			]
+		});
+	</script>
+</body>
+
+</html>
