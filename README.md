@@ -166,7 +166,7 @@ Both items are positioned by grid line numbers. Item 1 is set to start at column
 By default, item 2 would sit on top of item 1; however, we’ve created stacking context by assigning z-index: 1 to item 1, resulting it to sit on top of item 2.
 2.	In the second image, a grid item is positioned and layered on top using implicit grid line names from the defined grid-template-areas.
 
-## Slide 18 LAYERING GRID ITEMS
+## Slide 19 ALIGNING GRID ITEMS (BOX ALIGNMENT)
 CSS’s Box Alignment Module complements CSS Grid to allow items to be aligned along the row of column axis.
 `justify-items` and `justify-self` align items along the row axis, and `align-items` and `align-self` align items along the column axis.
 `justify-items` and `align-items` are applied to the grid container and support the following values:
@@ -182,7 +182,7 @@ CSS’s Box Alignment Module complements CSS Grid to allow items to be aligned a
 
 On these slides you can see how each of the properties affects the position of the element.
 
-## Slide 19 INDIVIDUAL ITEMS (PROPERTIES)
+## Slide 20 INDIVIDUAL ITEMS (PROPERTIES)
 Individual items can be `self-aligned` with the `align-self` and `justify-self` properties. These properties support the following valuse:
 -	**auto**
 -	**normal**
@@ -196,7 +196,7 @@ Individual items can be `self-aligned` with the `align-self` and `justify-self` 
 
 On these slides you can see how each of the properties affects the position of the element.
 
-## Slide 20 ALIGNING GRID TRACKS
+## Slide 21 ALIGNING GRID TRACKS
 Grid tracks can be aligned relative to the grid container along the row and column axes.
 `align-content` aligns tracks along the row axis and `justify-content` along the column axis. They support the following properties:
 -	**normal**
