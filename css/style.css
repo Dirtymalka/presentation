@@ -1,0 +1,37 @@
+.terminology {
+  font-size: 1.3rem;
+}
+
+.term-title {
+  font-weight: 700;
+  font-size: 2rem;
+  color: #ff0099;
+}
+
+.reveal pre {
+  width: 100%;
+}
+
+li {
+  font-size: 1.7rem;
+}
+
+img.property-img {
+  width: 435px;
+  height: 280px;
+}
+
+img.property-img-sm {
+  width: 420px;
+  height: 224px;
+}
+
+p {
+  font-size: 1.7rem;
+  text-align: left;
+  text-indent: 50px;
+}
+
+h2 {
+  color: #8987ff;;
+}
